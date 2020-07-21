@@ -55,7 +55,6 @@ def insert_into_bq(qdate, json, bq_dataset, bq_table):
                             json['rates']['CNY']
     )
     row = [(qdate,usd,cad,mxn,gbp,cny)]
-
     print(row)
     
     # prepare the bq client
@@ -63,15 +62,8 @@ def insert_into_bq(qdate, json, bq_dataset, bq_table):
     table_id = "{}.{}".format(bq_dataset, bq_table)
     table = bq_client.get_table(table_id)
 
-    # data to insert
-    # rows_to_insert = [(u"Phred Phlyntstone", 32), (u"Wylma Phlyntstone", 29)]
-
     # try to insert the data
     errors = bq_client.insert_rows(table, row) 
-    # errors = client.insert_rows(table, rows_to_insert)  # Make an API request.
-
-    # errors = BQ.insert_rows_json(table,json_rows=[row],
-    #                     row_ids=[file_name],retry=retry.Retry(deadline=30))
 
     if errors == []:
         print("New rows have been added.")
